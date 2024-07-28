@@ -2,13 +2,19 @@ import User from "../utils/user.Schema.mjs"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
+import { validationResult } from 'express-validator'
+
 
 export const loginController=async (req,res)=>{
     const {username,password}=req.body
+    const result = validationResult(req)
+    if(!result.isEmpty()){
+        return res.status(400).json({result})
+    }
     try{
         const user=await User.findOne({username})
         if(!user){
-            return res.status(400).json({msg:'boyle bir kullanici var'})
+            return res.status(400).json({msg:'boyle bir kullanici yok'})
         }
         const match= await bcrypt.compare(password,user.password)
         if(!match){
