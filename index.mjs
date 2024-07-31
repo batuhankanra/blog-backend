@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import db from './src/utils/db.mjs'
 import { authRoutes } from './src/routes/auth/auth.routes.mjs'
+import { blogRoutes } from './src/routes/blog/blog.routes.mjs'
 
 
 const app =express()
@@ -13,6 +14,7 @@ db
 
 
 app.use('/api/auth',authRoutes)
+app.use('/api/product',blogRoutes)
 
 
 
